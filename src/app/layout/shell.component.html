@@ -1,0 +1,101 @@
+<mat-sidenav-container class="container" autosize>
+  <mat-sidenav class="nav" [class.collapsed]="layout.rail()" [mode]="layout.isMobile() ? 'over' : 'side'"
+               [opened]="!layout.isMobile() || layout.drawerOpen()" (closedStart)="layout.drawerOpen.set(false)" [disableClose]="!layout.isMobile()">
+    <div class="brand">
+      <span class="logo">ESS</span>
+      @if (!layout.rail()) { <div><strong>ESS Portal</strong><small>Employee Self-Service</small></div> }
+    </div>
+    <nav>
+      @if (!layout.rail()) { <div class="group">Main</div> } @else { <div class="sep"></div> }
+      <a routerLink="/dashboard" routerLinkActive="active" [matTooltip]="layout.rail() ? 'Dashboard' : ''" matTooltipPosition="right"><mat-icon fontSet="material-icons-outlined">grid_view</mat-icon><span>Dashboard</span></a>
+      <a routerLink="/requests" routerLinkActive="active" [matTooltip]="layout.rail() ? 'My Requests' : ''" matTooltipPosition="right"><mat-icon fontSet="material-icons-outlined">receipt_long</mat-icon><span>My Requests</span></a>
+      <a routerLink="/approvals" routerLinkActive="active" [matTooltip]="layout.rail() ? 'Approvals' : ''" matTooltipPosition="right">
+        <mat-icon>done</mat-icon><span>Approvals</span>
+        @if (approvalsCount() && !layout.rail()) { <em class="count">{{ approvalsCount() }}</em> }
+      </a>
+      @for (g of groups; track g.name) {
+        @if (!layout.rail()) { <div class="group">{{ g.name }}</div> } @else { <div class="sep"></div> }
+        @for (m of g.items; track m.key) {
+          <a [routerLink]="m.route" routerLinkActive="active" [matTooltip]="layout.rail() ? m.label : ''" matTooltipPosition="right">
+            <mat-icon fontSet="material-icons-outlined">{{ m.icon }}</mat-icon><span>{{ m.label }}</span>
+          </a>
+        }
+      }
+    </nav>
+    <div class="bottom">
+      <button class="collapse" (click)="layout.toggleNav()" [matTooltip]="layout.rail() ? 'Expand menu' : ''" matTooltipPosition="right">
+        <mat-icon>{{ layout.isMobile() ? 'close' : layout.rail() ? 'chevron_right' : 'chevron_left' }}</mat-icon><span>{{ layout.isMobile() ? 'Close menu' : 'Collapse menu' }}</span>
+      </button>
+      <div class="me">
+        <span class="avatar">{{ users.user().initials }}</span>
+        @if (!layout.rail()) {
+          <div class="who"><strong>{{ users.user().name }}</strong><small>{{ users.user().code }}</small></div>
+        }
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content">
+    <header class="topbar" [class.searching]="searchOpen()">
+      @if (layout.isMobile()) {
+        <button class="round menu-btn" (click)="layout.drawerOpen.set(true)" aria-label="Open menu"><mat-icon>menu</mat-icon></button>
+        <span class="logo-sm">ESS</span>
+      }
+      <div class="search">
+        <mat-icon>search</mat-icon>
+        <input #searchInput [formControl]="search" [matAutocomplete]="auto" placeholder="Search forms, requests or policies…" aria-label="Search" />
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="go($event.option.value)" [displayWith]="blank">
+          @for (h of hits(); track h.link) {
+            <mat-option [value]="h" class="hit">
+              <mat-icon fontSet="material-icons-outlined">{{ h.icon }}</mat-icon>
+              <span class="hl">{{ h.label }}</span><small>{{ h.sub }}</small>
+            </mat-option>
+          }
+        </mat-autocomplete>
+        <button class="search-close" (click)="searchOpen.set(false)" aria-label="Close search"><mat-icon>close</mat-icon></button>
+      </div>
+      <span class="spacer"></span>
+      <button class="round search-btn" (click)="openSearch()" aria-label="Search"><mat-icon>search</mat-icon></button>
+      <button class="round" [matMenuTriggerFor]="notifMenu" #nt="matMenuTrigger" aria-label="Notifications">
+        <mat-icon fontSet="material-icons-outlined">notifications</mat-icon>
+        @if (notifications.unreadCount()) { <em class="badge">{{ notifications.unreadCount() }}</em> }
+      </button>
+      <button class="round" [matMenuTriggerFor]="helpMenu" aria-label="Help"><mat-icon fontSet="material-icons-outlined">help_outline</mat-icon></button>
+      <div class="user">
+        <span class="avatar">{{ users.user().initials }}</span>
+        <div><strong>{{ users.user().name }}</strong><small>{{ users.user().designation }} · {{ users.user().location }}</small></div>
+      </div>
+    </header>
+    <main><router-outlet /></main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<mat-menu #notifMenu="matMenu" class="notif-menu" xPosition="before">
+  <div class="np" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+    <div class="np-head">
+      <strong>Notifications</strong>
+      <button mat-button color="primary" [disabled]="!notifications.unreadCount()" (click)="notifications.markAllRead()">Mark all as read</button>
+    </div>
+    <mat-button-toggle-group class="tabs" [value]="notifTab()" (change)="notifTab.set($event.value)" hideSingleSelectionIndicator>
+      <mat-button-toggle value="all">All</mat-button-toggle>
+      <mat-button-toggle value="unread">Unread @if (notifications.unreadCount()) {({{ notifications.unreadCount() }})}</mat-button-toggle>
+    </mat-button-toggle-group>
+    <div class="np-list">
+      @for (n of notifList(); track n.id) {
+        <app-notification-item [n]="n" (click)="openNotification(n); nt.closeMenu()" />
+      } @empty {
+        <div class="empty">
+          <mat-icon fontSet="material-icons-outlined">{{ notifTab() === 'unread' && notifications.all().length ? 'mark_email_read' : 'notifications_none' }}</mat-icon>
+          <strong>{{ notifTab() === 'unread' && notifications.all().length ? 'You’re all caught up' : 'No notifications yet' }}</strong>
+          <span>{{ notifTab() === 'unread' && notifications.all().length ? 'New updates on your requests will show up here.' : 'When something happens with your requests, you’ll see it here.' }}</span>
+        </div>
+      }
+    </div>
+  </div>
+  <a mat-menu-item routerLink="/notifications" class="np-foot">View all notifications</a>
+</mat-menu>
+
+<mat-menu #helpMenu="matMenu" xPosition="before">
+  <button mat-menu-item (click)="helpdesk()"><mat-icon>support_agent</mat-icon>Contact HR helpdesk</button>
+  <button mat-menu-item (click)="helpdesk()"><mat-icon>policy</mat-icon>View policies</button>
+</mat-menu>

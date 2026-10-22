@@ -48,12 +48,12 @@ $theme: mat.define-light-theme((
   --blue-100: #dbe6fd;
   --bg: #f4f6fa;
   --card: #ffffff;
-  --border: #e3e7ee;
-  --border-strong: #cfd6e2;
-  --text: #111827;
-  --text-2: #4b5563;
-  --muted: #6b7280;
-  --field-locked: #eef1f5;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text: #0f172a;
+  --text-2: #334155;
+  --muted: #64748b;
+  --field-locked: #f1f5f9;
   --green: #15803d;
   --green-50: #e8f7ee;
   --amber: #b45309;
@@ -93,7 +93,7 @@ h1, h2, h3, h4 { margin: 0; color: var(--text); }
 }
 .breadcrumb { color: var(--muted); font-size: 12.5px; a { color: var(--muted); } }
 .form-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
-.side { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 88px; }
+.side { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 92px; }
 .card {
   background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
   box-shadow: var(--shadow); padding: 20px;
@@ -117,11 +117,11 @@ h1, h2, h3, h4 { margin: 0; color: var(--text); }
 
 // Field label above input (design style)
 .field { display: flex; flex-direction: column; min-width: 0;
-  > label { font-size: 12.5px; font-weight: 500; color: var(--text-2); margin-bottom: 6px; }
+  > label { font-size: 13px; font-weight: 500; color: var(--text-2); margin-bottom: 6px; }
   .mat-mdc-form-field { width: 100%; }
 }
 .field-locked .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline > * ,
-.mat-mdc-form-field.locked .mdc-notched-outline > * { border-color: transparent !important; }
+.mat-mdc-form-field.locked .mdc-notched-outline > * { border-color: var(--border) !important; }
 .mat-mdc-form-field.locked .mdc-text-field { background: var(--field-locked); border-radius: 8px; }
 .mat-mdc-form-field.locked input { color: var(--text-2) !important; }
 .mat-mdc-form-field .lock-icon { font-size: 16px; width: 16px; height: 16px; color: var(--muted); padding-right: 10px; }
@@ -144,7 +144,16 @@ h1, h2, h3, h4 { margin: 0; color: var(--text); }
 }
 .radio-label { font-size: 12.5px; font-weight: 500; color: var(--text-2); margin: 4px 0 8px; display: block; }
 
-// Buttons
+// Buttons (Figma "Button": 10px top/bottom, 18px left/right, 14px semibold, 8px radius)
+.mat-mdc-unelevated-button, .mat-mdc-outlined-button, .mat-mdc-button, .mat-mdc-raised-button {
+  --mdc-filled-button-container-height: 38px; --mdc-outlined-button-container-height: 38px;
+  --mdc-text-button-container-height: 38px; --mdc-protected-button-container-height: 38px;
+  height: 38px !important; padding: 0 18px !important; font-size: 14px !important; line-height: 18px !important;
+  .mat-icon { margin-left: -4px; margin-right: 8px; }
+  .mat-icon[iconPositionEnd] { margin-left: 8px; margin-right: -4px; }
+}
+.mat-mdc-outlined-button:not(:disabled) { --mdc-outlined-button-label-text-color: #1e293b; }
+.mat-mdc-button:not(:disabled):not(.mat-primary):not(.text-danger) { --mdc-text-button-label-text-color: var(--muted); }
 .mat-mdc-unelevated-button, .mat-mdc-outlined-button, .mat-mdc-button { --mdc-filled-button-container-shape: 8px; --mdc-outlined-button-container-shape: 8px; --mdc-text-button-container-shape: 8px; font-weight: 600 !important; letter-spacing: 0 !important; }
 .mat-mdc-outlined-button:not(:disabled) { --mdc-outlined-button-outline-color: var(--border-strong); --mdc-outlined-button-label-text-color: var(--text); background: #fff; }
 .btn-danger.mat-mdc-unelevated-button:not(:disabled) { --mdc-filled-button-container-color: var(--red); }
@@ -167,8 +176,8 @@ h1, h2, h3, h4 { margin: 0; color: var(--text); }
   .sub { font-size: 12px; color: var(--muted); }
 }
 .icon-btn-sm.mat-mdc-icon-button { --mdc-icon-button-state-layer-size: 32px; width: 32px; height: 32px; padding: 4px; .mat-icon { font-size: 18px; width: 18px; height: 18px; } }
-.add-link { display: inline-flex; align-items: center; gap: 4px; color: var(--blue); font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: none; padding: 8px 0;
-  .mat-icon { font-size: 18px; width: 18px; height: 18px; }
+.add-link { display: inline-flex; align-items: center; gap: 4px; height: 34px; line-height: 18px; color: var(--blue); font-weight: 600; font-size: 13px; cursor: pointer; border: 0; background: none; padding: 0;
+  .mat-icon, .material-icons { font-size: 18px; width: 18px; height: 18px; line-height: 18px; }
   &:disabled { color: var(--muted); cursor: default; } }
 
 // Rules box

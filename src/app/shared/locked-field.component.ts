@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
   styles: [`
     .field { margin-bottom: 16px; }
     .box { display: flex; align-items: center; justify-content: space-between; height: 44px; padding: 0 12px; border-radius: 8px;
-      background: var(--field-locked); color: var(--text-2); font-size: 14px; box-sizing: border-box; }
+      background: var(--field-locked); border: 1px solid var(--border); color: var(--text-2); font-size: 14px; box-sizing: border-box; }
     span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     mat-icon { font-size: 16px; width: 16px; height: 16px; color: var(--muted); flex: none; }
     small { display: block; margin-top: 4px; color: var(--muted); font-size: 11.5px; }

@@ -29,6 +29,7 @@ import { StatusChipComponent } from '../shared/status-chip.component';
         <mat-button-toggle value="done">Recently decided</mat-button-toggle>
       </mat-button-toggle-group>
       <div class="card list">
+        <div class="table-wrap">
         <table mat-table [dataSource]="rows()">
           <ng-container matColumnDef="id"><th mat-header-cell *matHeaderCellDef>Request ID</th><td mat-cell *matCellDef="let r"><span class="id">{{ r.id }}</span></td></ng-container>
           <ng-container matColumnDef="employee"><th mat-header-cell *matHeaderCellDef>Employee</th><td mat-cell *matCellDef="let r"><strong>{{ r.employee.name }}</strong><div class="muted small">{{ r.employee.department }}</div></td></ng-container>
@@ -41,13 +42,14 @@ import { StatusChipComponent } from '../shared/status-chip.component';
           <tr mat-row *matRowDef="let r; columns: cols" (click)="open(r)"></tr>
           <tr class="mat-row" *matNoDataRow><td class="empty" [attr.colspan]="cols.length"><mat-icon>task_alt</mat-icon><strong>Nothing waiting</strong><span>You’re all caught up.</span></td></tr>
         </table>
+        </div>
       </div>
     </div>
   `,
   styles: [`
     .note { display: flex; gap: 8px; align-items: center; background: var(--blue-50); color: #1b3a8f; border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-bottom: 16px; mat-icon { font-size: 18px; width: 18px; height: 18px; } }
     .tabs { margin-bottom: 16px; }
-    .list { padding: 0; overflow-x: auto; } table { width: 100%; min-width: 760px; }
+    .list { padding: 16px; } .table-wrap { border: 1px solid var(--border); border-radius: 10px; overflow-x: auto; } table { width: 100%; min-width: 760px; }
     .id { color: var(--blue); font-weight: 600; }
     tr.mat-mdc-row { cursor: pointer; } tr.mat-mdc-row:hover { background: #f8fafc; }
     .empty { text-align: center; padding: 48px; color: var(--muted); mat-icon { display: block; margin: 0 auto 8px; color: var(--green); } strong { display: block; color: var(--text); } }

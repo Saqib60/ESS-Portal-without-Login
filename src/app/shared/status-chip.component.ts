@@ -6,7 +6,7 @@ import { RequestStatus } from '../core/models';
   standalone: true,
   template: `<span class="chip" [class]="cls"><i></i>{{ status }}</span>`,
   styles: [`
-    .chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+    .chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; line-height: 15px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
     i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
     .review { background: #e6eefd; color: #1f4fd8; }
     .pending { background: var(--amber-50); color: var(--amber); }

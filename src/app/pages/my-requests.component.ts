@@ -118,7 +118,7 @@ const TAB_STATUSES: Record<Exclude<Tab, 'all'>, string[]> = {
     .filter { width: 200px; }
     .layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: start; }
     .layout.with-panel { grid-template-columns: minmax(0, 1fr) 340px; }
-    .list { padding: 14px 14px 4px; }
+    .list { padding: 16px 16px 4px; }
     .table-wrap { border: 1px solid var(--border); border-radius: 10px; overflow-x: auto; }
     table { width: 100%; }
     .id { color: var(--blue); font-weight: 600; white-space: nowrap; }

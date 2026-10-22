@@ -97,9 +97,9 @@ import { StatusChipComponent } from '../shared/status-chip.component';
       mat-progress-bar { border-radius: 4px; --mdc-linear-progress-track-height: 6px; --mdc-linear-progress-active-indicator-height: 6px; } }
     .h2 { font-size: 18px; font-weight: 600; } .sub { margin: 4px 0 16px; font-size: 13px; }
     .tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 24px; }
-    .tile { display: flex; flex-direction: column; gap: 6px; color: var(--text); text-decoration: none; transition: all .15s; min-height: 120px;
+    .tile { display: flex; flex-direction: column; gap: 12px; color: var(--text); text-decoration: none; transition: all .15s; min-height: 120px;
       &:hover { border-color: var(--blue); box-shadow: 0 6px 20px rgba(31,79,216,.08); text-decoration: none; transform: translateY(-1px); }
-      .ic { width: 38px; height: 38px; border-radius: 9px; background: var(--blue-50); color: var(--blue); display: grid; place-items: center; margin-bottom: 12px;
+      .ic { width: 40px; height: 40px; border-radius: 10px; background: var(--blue-50); color: var(--blue); display: grid; place-items: center;
         mat-icon { font-size: 20px; width: 20px; height: 20px; } }
       strong { font-size: 15px; font-weight: 600; } small { color: var(--muted); font-size: 12.5px; line-height: 1.4; } }
     .bottom { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 20px; align-items: start; }

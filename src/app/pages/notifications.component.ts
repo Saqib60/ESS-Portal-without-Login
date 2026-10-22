@@ -59,7 +59,7 @@ const PAGE = 6;
     </div>
   `,
   styles: [`
-    .list { padding: 16px 10px; }
+    .list { padding: 16px; }
     .tabs { margin: 0 6px 8px; }
     .group { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; padding: 14px 16px 6px; }
     .empty { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 48px 24px; color: var(--muted);

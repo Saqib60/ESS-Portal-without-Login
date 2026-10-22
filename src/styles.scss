@@ -28,6 +28,12 @@ $theme: mat.define-light-theme((
 
 @include mat.core();
 @include mat.all-component-themes($theme);
+
+// Inputs and selects are 44px tall with 14px text, matching the locked fields and radio cards.
+.mat-mdc-form-field { @include mat.form-field-density(-3); }
+.mat-mdc-paginator .mat-mdc-form-field { @include mat.form-field-density(-5); }
+.mat-mdc-form-field-text-prefix, .mat-mdc-form-field-text-suffix { white-space: nowrap; }
+:root { --mat-form-field-container-text-size: 14px; --mat-select-trigger-text-size: 14px; }
 @include mat.typography-hierarchy($typography);
 
 // ---------------------------------------------------------------------------
@@ -76,7 +82,8 @@ h1, h2, h3, h4 { margin: 0; color: var(--text); }
 // ---------------------------------------------------------------------------
 // Layout helpers
 // ---------------------------------------------------------------------------
-.page { padding: 24px 32px 48px; max-width: 1240px; margin: 0 auto; }
+// Pages use the full width next to the sidebar; only the padding grows on large screens.
+.page { padding: 24px 32px 48px; }
 .page-header {
   display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 20px;
   h1 { font-size: 26px; font-weight: 700; letter-spacing: -.01em; margin-top: 4px; }
@@ -95,6 +102,8 @@ h1, h2, h3, h4 { margin: 0; color: var(--text); }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 16px; }
 .span-2 { grid-column: span 2; }
+// Same row spacing as the locked fields, which carry their own 16px.
+.grid-2 > .field, .grid-3 > .field { margin-bottom: 16px; }
 .muted { color: var(--muted); }
 .small { font-size: 12px; }
 .req-note { font-size: 12.5px; color: var(--text-2); margin-bottom: 8px; .star { color: var(--red); } }
@@ -128,7 +137,7 @@ h1, h2, h3, h4 { margin: 0; color: var(--text); }
 .choice-list { display: flex; flex-direction: column; gap: 8px; }
 .choice {
   display: flex; align-items: center; gap: 8px; border: 1px solid var(--border-strong); border-radius: 8px;
-  padding: 0 10px 0 4px; background: #fff; transition: all .15s; cursor: pointer;
+  padding: 0 10px 0 4px; min-height: 44px; box-sizing: border-box; background: #fff; transition: all .15s; cursor: pointer;
   &.selected { border-color: var(--blue); background: var(--blue-50); }
   .mat-mdc-radio-button, .mdc-form-field { width: 100%; }
   .mdc-label { flex: 1; cursor: pointer; padding: 10px 0; }
@@ -181,6 +190,10 @@ h1, h2, h3, h4 { margin: 0; color: var(--text); }
 .mat-mdc-menu-panel.notif-menu { width: 400px; max-width: calc(100vw - 24px); }
 .menu-group { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding: 10px 16px 4px; font-weight: 600; }
 
+@media (min-width: 1600px) {
+  .page { padding: 28px 40px 56px; }
+  .form-layout { grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; }
+}
 @media (max-width: 1100px) {
   .form-layout { grid-template-columns: minmax(0, 1fr); }
   .side { position: static; }

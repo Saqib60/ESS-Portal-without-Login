@@ -113,7 +113,6 @@ const TAB_STATUSES: Record<Exclude<Tab, 'all'>, string[]> = {
     </mat-menu>
   `,
   styles: [`
-    .page.wide { max-width: 1320px; }
     .split .div { display: inline-block; width: 1px; height: 18px; background: rgba(255,255,255,.4); margin: 0 4px 0 10px; vertical-align: middle; }
     .toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
     .filter { width: 200px; }
